@@ -23,5 +23,6 @@ let () =
        Dream.get "/media/movies/**" (Dream.static "./media/movies");
        Dream.get "/media/posters/**" (Dream.static "./media/posters");
        (* Servir o frontend Vite construído *)
+       Dream.get "/" (Dream.from_filesystem "../frontend/dist" "index.html");
        Dream.get "/**" (Dream.static "../frontend/dist");
      ]
