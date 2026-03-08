@@ -7,34 +7,38 @@ O objetivo principal é permitir que a Chloé pegue num bloco de notas/caderno f
 
 ## 🛠 Arquitetura Atual
 
-- **Frontend Kiosk (Python + Pygame)**: Interface nativa levíssima em ecra inteiro (`kiosk/main.py`). Renderiza um ecrã escuro e elegante em loop ("Cinema da Chloé") onde a animação e processamento consome muito menos RAM (< 50 MB) do que o Chrome/Web. Este Kiosk aguarda à escuta dos sinais de leitura do QR Code físicos ou teclas.
-- **Reprodutor de Vídeo (MPV)**: A aplicação Python chama diretamente o motor levíssimo `mpv` a nível de sistema em Fullscreen e com aceleração gráfica ativada localmente (`mpv --fs file.mp4`).
+O **Cinema da Chloé** utiliza uma framework web moderna focada apenas em performance local:
+
+- **Frontend Web (React + Vite)**: Interface "Netflix-Pink" super fluida construída com ReactJS a correr no browser (ideal para um Chromium Kiosk-mode). Tem transições suaves, apresentação do perfil, e um carrossel de filmes com as respetivas capas! A aplicação "ouve" teclados (neste caso, as leituras dos QR Codes físicos).
+- **Backend Servidor (OCaml + Dream)**: Um servidor extremamente rápido construído com a linguagem funcional OCaml. A sua única e fulcral missão é disponibilizar as pastas `media/movies/` (e os posters) à rede local para que o frontend React carregue quase instantaneamente e sem stutters, além de devolver a `movielist` atual de forma dinâmica.
 
 ---
 
 ## 🚀 Como Executar
 
 ### Pré-Requisitos
-- Sistema OS, ex: Debian/Linux/Ubuntu
-- `mpv` media player
-- `python3` e `pygame`
+1. **Node.js e npm** (Para arrancar o React)
+2. **OCaml e OPAM** com a biblioteca `dream` instalada.
+3. Um browser local (Chrome/Firefox/Edge)
 
-Instalação de pacotes recomendada (Debian 12):
+### 1. Iniciar o Servidor de Filmes Automático (Backend)
+Vai à diretoria `backend/` e corre as compilações do Dune:
 ```bash
-sudo apt install python3-pygame mpv
-# Ou via pip num ambiente virtual
-pip install pygame
+cd backend
+dune exec ./main.exe
 ```
+**(O servidor ficará disponível em `http://localhost:8080`)**
 
-Inicia a aplicação via:
+### 2. Iniciar o Ecrã de Cinema (Frontend)
+Num outro terminal, vai à diretoria `frontend/` e arranca o Vite:
 ```bash
-python3 kiosk/main.py
+cd frontend
+npm install # se for a primeira vez
+npm run dev
 ```
+**(O design animado com o carrossel abrirá em `http://localhost:5173`)**
 
-### 1. Sistema Operativo base e Kiosk Mode
-* **OS**: Debian 12 (Bookworm) versão Minimal. Ecrã via X11 ou TTY Framebuffer.
-
-### 2. Leitor de QR Code (Hardware)
+### 3. Leitor de QR Code (Hardware)
 * Leitores de QR codes físicos conectam-se por USB e operam como "teclados virtuais" (HID).
-* Quando o leitor fotografa o código de barras/QR, ele digita a string e submete um parágrafo (`Enter`).
-* O Event Loop do **Pygame** mapeia essas sequencias (ou atalhos de botões únicos) às películas dentro da subpasta de media. Sendo um aplicativo focado exclusivamente nisso, jamais ocorrerá perdas de focus sem depender de interfaces externas.
+* No FrontEnd React há um Event Listener (`window.addEventListener('keydown')`) de propósito concebido que intercepta a escrita desses números/strings.
+* Colocando o Browser em ecrã inteiro (exemplo `chromium --kiosk "http://localhost:5173"` num ecrã táctil), o leitor de QR vai disparar as teclas que farão começar automagicamente o filme selecionado da base de dados do OCaml!
