@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Local</title>
+</head>
+<body>
+    <h1>Cinema Local</h1>
+    <p>Bem-vindo ao Cinema Local!</p>
+    <p>Para assistir a um filme, escaneie o QR code do filme.</p>
+    <p>O filme será reproduzido no player de vídeo.</p>
+    
+    <div style="margin-top: 20px;">
+        <img id="posterImage" src="" alt="Poster do Filme" style="max-width: 300px; display: none;">
+    </div>
+    
+    <div style="margin-top: 20px;">
+        <video id="videoPlayer" width="800" controls>
+            <source id="videoSource" src="" type="video/mp4">
+            Seu navegador não suporta a tag de vídeo.
+        </video>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
