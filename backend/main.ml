@@ -14,12 +14,14 @@ let () =
   @@ Dream.router [
       (* endpoint que dá todos os filmes disponiveis. Usado para debug. *)
       Dream.get "/movielist" (fun _ ->
-        let movies_dir = "/home/bruno/Desktop/Chloe/chl_personal_cinema/backend/media/movies" in
+        let movies_dir = "./media/movies" in
         let files = Sys.readdir movies_dir in
         let movies_list = Array.to_list files |> String.concat "\n" in
         Dream.respond ~headers:["Content-Type", "text/plain"] movies_list
       );
       (* com as ** tudo o que vier depois de /media/ será servido como arquivo estático da diretoria media *)
-       Dream.get "/media/movies/**" (Dream.static "/home/bruno/Desktop/Chloe/chl_personal_cinema/backend/media/movies");
-       Dream.get "/media/posters/**" (Dream.static "/home/bruno/Desktop/Chloe/chl_personal_cinema/backend/media/posters");
+       Dream.get "/media/movies/**" (Dream.static "./media/movies");
+       Dream.get "/media/posters/**" (Dream.static "./media/posters");
+       (* Servir o frontend Vite construído *)
+       Dream.get "/**" (Dream.static "../frontend/dist");
      ]

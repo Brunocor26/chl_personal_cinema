@@ -21,8 +21,8 @@ function App() {
   // Mapeamento das teclas aos filmes (Simula QR Code Reader)
   const moviesMap = {
     '1': {
-        video: 'http://localhost:8080/media/movies/frozen.mp4',
-        poster: 'http://localhost:8080/media/posters/frozen.jpg'
+        video: '/media/movies/frozen.mp4',
+        poster: '/media/posters/frozen.jpg'
     }
   };
 
@@ -32,7 +32,7 @@ function App() {
     setRandomPhrase(PHRASES[randomIndex]);
 
     // Buscar lista de filmes do servidor OCaml
-    fetch('http://localhost:8080/movielist')
+    fetch('/movielist')
       .then(res => res.text())
       .then(text => {
         const files = text.split('\n').filter(f => f.trim() !== '');
@@ -110,7 +110,7 @@ function App() {
           {movieList.map(movieFile => {
             // Substitui a extensão (.mp4, .mov, etc) por .jpg para o poster
             const baseName = movieFile.replace(/\.(mp4|mov|mkv|avi)$/i, '');
-            const posterUrl = `http://localhost:8080/media/posters/${baseName}.jpg`;
+            const posterUrl = `/media/posters/${baseName}.jpg`;
             return (
               <img key={movieFile} src={posterUrl} alt={baseName} className="poster-img" />
             );
