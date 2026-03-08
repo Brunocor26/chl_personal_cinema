@@ -16,27 +16,31 @@ function App() {
   const [currentMedia, setCurrentMedia] = useState(null);
   const [randomPhrase, setRandomPhrase] = useState("");
   const [movieList, setMovieList] = useState([]);
+  const [moviesMap, setMoviesMap] = useState({});
   const videoRef = useRef(null);
-
-  // Mapeamento das teclas aos filmes (Simula QR Code Reader)
-  const moviesMap = {
-    '1': {
-        video: '/media/movies/frozen.mp4',
-        poster: '/media/posters/frozen.jpg'
-    }
-  };
 
   useEffect(() => {
     // Escolher frase aleatória a cada reload da app
     const randomIndex = Math.floor(Math.random() * PHRASES.length);
     setRandomPhrase(PHRASES[randomIndex]);
 
-    // Buscar lista de filmes do servidor OCaml
+    // Buscar lista de filmes do servidor OCaml e gerar o mapa de QR Codes
     fetch('/movielist')
       .then(res => res.text())
       .then(text => {
         const files = text.split('\n').filter(f => f.trim() !== '');
         setMovieList(files);
+        
+        const map = {};
+        files.forEach((file, index) => {
+          const baseName = file.replace(/\.(mp4|mov|mkv|avi)$/i, '');
+          // Atribui o botão '1' ao primeiro ficheiro, '2' ao segundo, etc.
+          map[String(index + 1)] = {
+            video: `/media/movies/${file}`,
+            poster: `/media/posters/${baseName}.jpg`
+          };
+        });
+        setMoviesMap(map);
       })
       .catch(err => console.error("Failed to fetch movie list", err));
   }, []);
@@ -91,6 +95,11 @@ function App() {
 
   return (
     <>
+      <div className="animated-background">
+        <div className="bubble"></div><div className="bubble"></div><div className="bubble"></div>
+        <div className="bubble"></div><div className="bubble"></div><div className="bubble"></div>
+      </div>
+
       {/* Profile Selection Screen */}
       <div className={`screen-container ${appState !== STATE_PROFILE ? 'exit' : ''}`}>
         <h2 className="profile-title">Quem está a ver?</h2>
@@ -121,7 +130,13 @@ function App() {
       {/* Player Screen */}
       {appState === STATE_PLAYER && (
          <div className="player-container">
-            <button className="back-btn" onClick={handleBackToScanner}>⬅ Voltar ao Menu</button>
+            <button className="back-btn" onClick={handleBackToScanner}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Voltar</span>
+            </button>
             <video 
                 ref={videoRef}
                 className="video-player"

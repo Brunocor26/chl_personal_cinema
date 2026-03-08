@@ -1,10 +1,11 @@
 @import url("https://fonts.cdnfonts.com/css/swansea");
 
 :root {
-  --bg-color: #ffe6f0; /* Fundo rosa claro pastel */
-  --text-primary: #d61c5c; /* Rosa escuro / Vermelho framboesa (Netflix vibes para crianças) */
-  --text-secondary: #ff6699; /* Rosa médio */
-  --accent-color: #ff3377; /* Rosa vibrante */
+  --bg-color: #fce4ec;
+  --bg-gradient-1: #ffb6c1;
+  --text-primary: #c2185b;
+  --text-secondary: #d81b60;
+  --accent-color: #e91e63;
   --card-bg: #ffffff;
 }
 
@@ -15,9 +16,8 @@
 }
 
 body {
-  font-family:
-    "Swansea", "Comic Sans MS", sans-serif; /* Fonte infantil/elegante pedida */
-  background-color: var(--bg-color);
+  font-family: "Swansea", "Comic Sans MS", sans-serif;
+  background: radial-gradient(circle at 50% 50%, var(--bg-gradient-1) 0%, var(--bg-color) 100%);
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
@@ -48,7 +48,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background: radial-gradient(circle at top, #fff0f5 0%, #ffccff 100%);
+  background: transparent;
   z-index: 10;
   transition:
     opacity 1.2s ease-in-out,
@@ -61,37 +61,40 @@ body {
   pointer-events: none;
 }
 
-/* Título estilo Netflix mas Rosa */
+/* Título estilo Netflix mas Rosa Premium */
 .title {
-  font-size: 5rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-  color: var(--text-primary);
-  text-shadow:
-    3px 3px 0px #ff99cc,
-    6px 6px 0px rgba(255, 102, 153, 0.2);
-  animation: netflix-pop 2s infinite alternate;
+  font-size: 5.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 25px;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 51, 119, 0.6), 0 0 40px rgba(255, 51, 119, 0.4);
+  animation: pulse-glow 3s infinite alternate;
   text-align: center;
 }
 
 .instruction {
   font-size: 1.8rem;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   text-align: center;
   max-width: 600px;
-  margin-bottom: 40px;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 10px 25px;
-  border-radius: 30px;
-  box-shadow: 0 4px 15px rgba(255, 102, 153, 0.15);
+  margin-bottom: 50px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 15px 35px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(255, 102, 153, 0.2);
+  animation: float-instruction 4s infinite ease-in-out;
 }
 
 .sub-instruction {
   margin-top: 30px;
   font-size: 1.1rem;
-  color: #ff80b3;
+  color: #c2185b;
   font-style: italic;
+  opacity: 0.8;
 }
 
 /* Profile Selection */
@@ -168,13 +171,15 @@ body {
   border-radius: 50%;
 }
 
-@keyframes netflix-pop {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.03);
-  }
+@keyframes pulse-glow {
+  0% { text-shadow: 0 0 20px rgba(255, 51, 119, 0.6), 0 0 40px rgba(255, 51, 119, 0.4); transform: scale(1); }
+  100% { text-shadow: 0 0 30px rgba(255, 51, 119, 0.8), 0 0 60px rgba(255, 51, 119, 0.6); transform: scale(1.02); }
+}
+
+@keyframes float-instruction {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 @keyframes float-card {
@@ -265,24 +270,61 @@ body {
 /* --- Back Button --- */
 .back-btn {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 30px;
+  left: 30px;
   padding: 12px 24px;
   font-family: "Outfit", sans-serif;
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .back-btn:hover {
-  background-color: rgba(255, 51, 102, 0.8);
-  border-color: rgba(255, 51, 102, 1);
+  background: rgba(233, 30, 99, 0.8);
+  border-color: rgba(233, 30, 99, 1);
   transform: translateX(-5px);
+  box-shadow: 0 10px 20px rgba(233, 30, 99, 0.4);
+}
+
+/* --- Animated Bubbles Background --- */
+.animated-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.bubble {
+  position: absolute;
+  bottom: -150px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: rise 15s infinite ease-in;
+}
+.bubble:nth-child(1) { width: 40px; height: 40px; left: 10%; animation-duration: 8s; }
+.bubble:nth-child(2) { width: 80px; height: 80px; left: 30%; animation-duration: 12s; animation-delay: 2s; }
+.bubble:nth-child(3) { width: 50px; height: 50px; left: 50%; animation-duration: 10s; animation-delay: 4s; }
+.bubble:nth-child(4) { width: 90px; height: 90px; left: 70%; animation-duration: 14s; animation-delay: 1s; }
+.bubble:nth-child(5) { width: 35px; height: 35px; left: 85%; animation-duration: 9s; animation-delay: 5s; }
+.bubble:nth-child(6) { width: 120px; height: 120px; left: 20%; animation-duration: 18s; animation-delay: 3s; background: rgba(255, 255, 255, 0.15); }
+
+@keyframes rise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
 }
