@@ -3,23 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinema Local</title>
+    <link href="https://fonts.cdnfonts.com/css/swansea" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>Cinema Local</h1>
-    <p>Bem-vindo ao Cinema Local!</p>
-    <p>Para assistir a um filme, escaneie o QR code do filme.</p>
-    <p>O filme será reproduzido no player de vídeo.</p>
-    
-    <div style="margin-top: 20px;">
-        <img id="posterImage" src="" alt="Poster do Filme" style="max-width: 300px; display: none;">
+
+    <!-- Overlay de Repouso (Menu) -->
+    <div id="startMenu">
+        <h1 class="title">Cinema da Chloé</h1>
+        <p class="instruction">Por favor, aproxima o passe de filme do leitor mágico.</p>
+        
+        <div class="card-icon">
+            <div class="card-inner"></div>
+        </div>
+
+        <p class="sub-instruction">(Ou pressiona um número de 1 a 9 no teclado)</p>
     </div>
-    
-    <div style="margin-top: 20px;">
-        <video id="videoPlayer" width="800" controls>
-            <source id="videoSource" src="" type="video/mp4">
-            Seu navegador não suporta a tag de vídeo.
-        </video>
+
+    <!-- Interface do Leitor de Vídeo -->
+    <div id="playerContainer">
+        <div class="media-wrapper">
+            <button id="backButton" class="back-btn" onclick="hidePlayer()">⬅ Voltar ao Menu</button>
+            <div class="poster-box">
+                <img id="posterImage" src="" alt="Poster do Filme" style="display: none;">
+            </div>
+            
+            <div class="video-box">
+                <video id="videoPlayer" controls>
+                    <source id="videoSource" src="" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

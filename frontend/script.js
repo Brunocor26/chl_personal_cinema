@@ -46,24 +46,67 @@ function playposter(posterUrl) {
     posterImage.style.display = 'block';
 }
 
-// Caso queira testar passando um parâmetro na URL: ?video=meuvideo.mp4
+const startMenu = document.getElementById('startMenu');
+const playerContainer = document.getElementById('playerContainer');
+
+// Movies map: Keyboard Number -> Movie Data
+const moviesMap = {
+    '1': {
+        video: 'http://localhost:8080/media/movies/frozen.mp4',
+        poster: 'http://localhost:8080/media/posters/frozen.jpg'
+    }
+    // Adicione mais filmes aqui no futuro ('2': { video: '...', poster: '...' })
+};
+
+/**
+ * Esconde o meu inicial e mostra o reprodutor.
+ */
+function showPlayer() {
+    startMenu.classList.add('hidden');
+    playerContainer.classList.add('visible');
+}
+
+/**
+ * Esconde o reprodutor, pausa o vídeo e volta ao menu inicial.
+ */
+function hidePlayer() {
+    // Pausa o vídeo atual
+    videoPlayer.pause();
+    
+    // Altera a visibilidade das interfaces
+    playerContainer.classList.remove('visible');
+    startMenu.classList.remove('hidden');
+}
+
+/**
+ * Escuta eventos do teclado globalmente
+ */
+window.addEventListener('keydown', (event) => {
+    const key = event.key;
+    
+    // Verifica se a tecla pressionada é um número de 1 a 9
+    if (moviesMap[key]) {
+        const movie = moviesMap[key];
+        
+        showPlayer();
+        playposter(movie.poster);
+        
+        // Dá um pequeno delay para a animação do menu ocorrer suavemente antes de carregar o vídeo
+        setTimeout(() => {
+            playVideo(movie.video);
+        }, 500);
+    }
+});
+
+// Mantemos o fallback de teste na inicialização, caso você queira testar a URL diretamente
 window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     let videoParam = urlParams.get('video');
-    
-    // Fallback: se não tiver o parâmetro, tenta pegar o video default do servidor backend em ocaml
-    if (!videoParam) {
-        videoParam = "http://localhost:8080/media/movies/frozen.mp4";
-    }
+    let posterParam = urlParams.get('poster');
 
-    // Fallback de teste para o poster
-    let posterParam = urlParams.get('poster') || "http://localhost:8080/media/posters/frozen.jpg";
-
-    if (videoParam) {
-        playVideo(videoParam);
-    }
-    
-    if (posterParam) {
-        playposter(posterParam);
+    if (videoParam || posterParam) {
+        showPlayer();
+        if (posterParam) playposter(posterParam);
+        if (videoParam) playVideo(videoParam);
     }
 });
