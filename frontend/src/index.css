@@ -1,10 +1,10 @@
-@import url('https://fonts.cdnfonts.com/css/swansea');
+@import url("https://fonts.cdnfonts.com/css/swansea");
 
 :root {
-  --bg-color: #ffe6f0;         /* Fundo rosa claro pastel */
-  --text-primary: #d61c5c;     /* Rosa escuro / Vermelho framboesa (Netflix vibes para crianças) */
-  --text-secondary: #ff6699;   /* Rosa médio */
-  --accent-color: #ff3377;     /* Rosa vibrante */
+  --bg-color: #ffe6f0; /* Fundo rosa claro pastel */
+  --text-primary: #d61c5c; /* Rosa escuro / Vermelho framboesa (Netflix vibes para crianças) */
+  --text-secondary: #ff6699; /* Rosa médio */
+  --accent-color: #ff3377; /* Rosa vibrante */
   --card-bg: #ffffff;
 }
 
@@ -15,7 +15,8 @@
 }
 
 body {
-  font-family: 'Swansea', 'Comic Sans MS', sans-serif; /* Fonte infantil/elegante pedida */
+  font-family:
+    "Swansea", "Comic Sans MS", sans-serif; /* Fonte infantil/elegante pedida */
   background-color: var(--bg-color);
   color: var(--text-primary);
   display: flex;
@@ -33,6 +34,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 /* --- Container Style --- */
@@ -48,7 +50,9 @@ body {
   left: 0;
   background: radial-gradient(circle at top, #fff0f5 0%, #ffccff 100%);
   z-index: 10;
-  transition: opacity 1.2s ease-in-out, transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition:
+    opacity 1.2s ease-in-out,
+    transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .screen-container.exit {
@@ -64,7 +68,9 @@ body {
   letter-spacing: 2px;
   margin-bottom: 20px;
   color: var(--text-primary);
-  text-shadow: 3px 3px 0px #ff99cc, 6px 6px 0px rgba(255, 102, 153, 0.2);
+  text-shadow:
+    3px 3px 0px #ff99cc,
+    6px 6px 0px rgba(255, 102, 153, 0.2);
   animation: netflix-pop 2s infinite alternate;
   text-align: center;
 }
@@ -130,7 +136,6 @@ body {
   color: var(--text-primary);
 }
 
-
 /* Desenho de uma carta/passe em CSS sem Emojis */
 .card-icon {
   width: 140px;
@@ -153,7 +158,7 @@ body {
 }
 
 .card-icon::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 10px;
   left: 10px;
@@ -164,20 +169,36 @@ body {
 }
 
 @keyframes netflix-pop {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.03); }
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.03);
+  }
 }
 
 @keyframes float-card {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(3deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
 }
 
 @keyframes float-profile {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* --- Posters Carousel Netflix Style --- */
@@ -203,7 +224,10 @@ body {
   object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(255, 51, 119, 0.3);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
   cursor: pointer;
   border: 4px solid transparent;
 }
@@ -244,7 +268,7 @@ body {
   top: 20px;
   left: 20px;
   padding: 12px 24px;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 1.2rem;
   font-weight: 500;
   color: #fff;
